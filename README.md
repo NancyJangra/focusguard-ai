@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/NancyJangra/focusguard-ai/main/icons/icon128.png" alt="FocusGuard AI" width="100"/>
+<img src="https://raw.githubusercontent.com/NancyJangra/focusguard-ai/main/icon128.png" alt="FocusGuard AI" width="100"/>
 
 # ⚡ FocusGuard AI
 
