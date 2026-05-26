@@ -1,0 +1,355 @@
+/**
+ * FocusGuard AI v2 — content-styles.css
+ * In-page modal and focus overlay styles.
+ * Design: Dark glassmorphism with electric accent — feels premium, not jarring.
+ */
+
+/* ─── Reset ──────────────────────────────────────────────────────────────── */
+#fg-overlay *, #fg-focus-overlay * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+/* ─── Overlay Backdrop ───────────────────────────────────────────────────── */
+#fg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 24px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#fg-overlay.fg-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─── Modal Card ─────────────────────────────────────────────────────────── */
+#fg-modal {
+  width: 340px;
+  background: rgba(12, 12, 20, 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.1),
+    0 24px 64px rgba(0, 0, 0, 0.6),
+    0 0 80px rgba(139, 92, 246, 0.08);
+  overflow: hidden;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: #fff;
+}
+#fg-overlay.fg-visible #fg-modal {
+  transform: translateY(0) scale(1);
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+#fg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+#fg-logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+#fg-logo-icon {
+  font-size: 16px;
+}
+#fg-logo-text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.9);
+}
+#fg-close {
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+#fg-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* ─── Body ───────────────────────────────────────────────────────────────── */
+#fg-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+#fg-alert-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.12);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+#fg-site-pill {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}
+#fg-time-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+#fg-suggestion-box {
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+#fg-suggestion-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  color: #8b5cf6;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+#fg-suggestion-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ─── Actions ────────────────────────────────────────────────────────────── */
+#fg-actions {
+  padding: 0 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#fg-focus-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+#fg-focus-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+#fg-focus-btn:hover::before { opacity: 1; }
+.fg-btn-dur {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.7;
+  background: rgba(255,255,255,0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+#fg-dismiss-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  padding: 9px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+#fg-dismiss-btn:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+}
+#fg-footer {
+  padding: 8px 16px 12px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.2);
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ─── Focus Overlay ──────────────────────────────────────────────────────── */
+#fg-focus-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: rgba(6, 4, 18, 0.97);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+#fg-focus-overlay.fg-focus-visible {
+  opacity: 1;
+}
+#fg-focus-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  color: #fff;
+  padding: 32px;
+  max-width: 420px;
+}
+.fg-focus-icon-lg { font-size: 32px; }
+#fg-focus-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #fff;
+}
+#fg-focus-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: -16px;
+}
+
+/* ─── SVG Ring ───────────────────────────────────────────────────────────── */
+#fg-focus-ring-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+#fg-focus-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(0deg);
+}
+#fg-ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.07);
+  stroke-width: 8;
+}
+#fg-ring-progress {
+  fill: none;
+  stroke: url(#fg-ring-gradient);
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+#fg-focus-timer-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#fg-focus-timer {
+  font-size: 38px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #c4b5fd, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#fg-focus-timer-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+#fg-focus-tip {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  max-width: 280px;
+  line-height: 1.6;
+}
+#fg-end-focus-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+#fg-end-focus-btn:hover {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+
+/* ─── Particles ──────────────────────────────────────────────────────────── */
+#fg-focus-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.fg-particle {
+  position: absolute;
+  background: #8b5cf6;
+  border-radius: 50%;
+  animation: fg-float linear infinite;
+}
+@keyframes fg-float {
+  0%   { transform: translateY(0) scale(1); opacity: 0.4; }
+  50%  { transform: translateY(-60px) scale(1.3); opacity: 0.2; }
+  100% { transform: translateY(-120px) scale(0.5); opacity: 0; }
+}
+
+/* ─── Toast ──────────────────────────────────────────────────────────────── */
+#fg-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  z-index: 2147483647;
+  background: rgba(12, 12, 20, 0.95);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 12px 20px;
+  border-radius: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
+#fg-toast.fg-toast-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

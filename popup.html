@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusGuard AI</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <script src="chart.min.js"></script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-mark">⚡</div>
+      <div class="logo-text">
+        <span class="logo-name">FocusGuard</span>
+        <span class="logo-ai">AI</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot" id="status-dot"></div>
+      <span class="status-label" id="status-label">Tracking</span>
+    </div>
+  </header>
+
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="dashboard">📊 Today</button>
+    <button class="tab-btn" data-tab="analytics">📈 Analytics</button>
+    <button class="tab-btn" data-tab="planner">🤖 AI Plan</button>
+    <button class="tab-btn" data-tab="settings">⚙️ Settings</button>
+  </nav>
+
+  <!-- TAB 1: DASHBOARD -->
+  <section class="tab-panel active" id="tab-dashboard">
+
+    <div class="focus-banner" id="focus-banner" style="display:none;">
+      <div class="focus-banner-left">
+        <span class="focus-banner-icon">🎯</span>
+        <div>
+          <div class="focus-banner-title">Focus Mode Active</div>
+          <div class="focus-banner-timer" id="banner-timer">25:00 remaining</div>
+        </div>
+      </div>
+      <button class="focus-end-btn" id="banner-end-btn">End</button>
+    </div>
+
+    <div class="xp-bar-container">
+      <div class="xp-bar-header">
+        <span class="xp-level-badge" id="xp-level-badge">Lv.1</span>
+        <span class="xp-level-title" id="xp-level-title">Novice Scholar</span>
+        <span class="xp-value" id="xp-value">0 XP</span>
+      </div>
+      <div class="xp-bar-track">
+        <div class="xp-bar-fill" id="xp-bar-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🚨</div>
+        <div class="stat-value" id="stat-distractions">0</div>
+        <div class="stat-label">Distractions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-value" id="stat-sessions">0</div>
+        <div class="stat-label">Sessions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-value" id="stat-streak">0</div>
+        <div class="stat-label">Day Streak</div>
+      </div>
+      <div class="stat-card score-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-value" id="stat-score">—</div>
+        <div class="stat-label">Score</div>
+      </div>
+    </div>
+
+    <div class="score-section">
+      <div class="score-ring-wrap">
+        <svg class="score-ring-svg" viewBox="0 0 80 80">
+          <defs>
+            <linearGradient id="score-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <circle cx="40" cy="40" r="34" class="score-ring-bg"/>
+          <circle cx="40" cy="40" r="34" class="score-ring-fill" id="score-ring-fill"
+            stroke-dasharray="214"
+            stroke-dashoffset="214"
+            transform="rotate(-90 40 40)"/>
+        </svg>
+        <div class="score-ring-label">
+          <div class="score-ring-value" id="score-ring-value">—</div>
+          <div class="score-ring-sub">today</div>
+        </div>
+      </div>
+      <div class="score-details">
+        <div class="score-title">Productivity Score</div>
+        <div class="score-desc" id="score-desc">Complete focus sessions and avoid distractions to increase your score.</div>
+        <div class="badges-row" id="badges-row"></div>
+      </div>
+    </div>
+
+    <div class="bottom-cards">
+      <div class="exam-card" id="exam-card" style="display:none;">
+        <div class="exam-card-label">EXAM IN</div>
+        <div class="exam-card-days" id="exam-days">—</div>
+        <div class="exam-card-sub" id="exam-subjects-preview">—</div>
+      </div>
+      <div class="sites-card">
+        <div class="sites-card-label">TOP DISTRACTIONS</div>
+        <div class="site-bars" id="site-bars">
+          <div class="no-data">No data yet today</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="weekly-goal-section" id="weekly-goal-section">
+      <div class="weekly-goal-header">
+        <span class="weekly-goal-label">Weekly Goal</span>
+        <span class="weekly-goal-value" id="weekly-goal-value">0 / 150 min</span>
+      </div>
+      <div class="weekly-goal-bar">
+        <div class="weekly-goal-fill" id="weekly-goal-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <button class="quick-focus-btn" id="quick-focus-btn">
+      <span>🎯</span>
+      <span>Start Focus Session</span>
+      <span class="quick-focus-dur">25 min</span>
+    </button>
+
+  </section>
+
+  <!-- TAB 2: ANALYTICS -->
+  <section class="tab-panel" id="tab-analytics">
+
+    <div class="analytics-header">
+      <span class="analytics-title">7-Day Overview</span>
+      <button class="report-btn" id="generate-report-btn">⬇ Report</button>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-label">Distractions vs Focus Sessions</div>
+      <div style="position:relative; height:120px;">
+        <canvas id="weekly-chart"></canvas>
+      </div>
+    </div>
+
+    <div class="peak-hours-section">
+      <div class="section-label">⏰ Peak Distraction Hours</div>
+      <div class="peak-hours-list" id="peak-hours-list">
+        <div class="no-data">Not enough data yet</div>
+      </div>
+    </div>
+
+    <div class="insights-section">
+      <div class="insights-header">
+        <span class="section-label">🧠 AI Behavioral Insights</span>
+        <button class="refresh-btn" id="refresh-insights-btn">↻</button>
+      </div>
+      <div class="insights-list" id="insights-list">
+        <div class="insight-loading">Analyzing your patterns...</div>
+      </div>
+    </div>
+
+    <div class="report-section" id="report-section" style="display:none;">
+      <div class="report-header">
+        <span class="section-label">📄 Weekly Report</span>
+        <button class="copy-btn" id="copy-report-btn">Copy</button>
+      </div>
+      <pre class="report-text" id="report-text"></pre>
+    </div>
+
+  </section>
+
+  <!-- TAB 3: AI PLANNER -->
+  <section class="tab-panel" id="tab-planner">
+
+    <div class="planner-header">
+      <div class="planner-title">AI Study Planner</div>
+      <div class="planner-sub">Personalized daily plan based on your focus history</div>
+    </div>
+
+    <button class="generate-plan-btn" id="generate-plan-btn">
+      <span>✦</span> Generate Today's Plan
+    </button>
+
+    <div class="plan-loading" id="plan-loading" style="display:none;">
+      <div class="spinner"></div>
+      <span>Generating your personalized plan...</span>
+    </div>
+
+    <div class="plan-output" id="plan-output" style="display:none;">
+      <div class="plan-motivation" id="plan-motivation"></div>
+      <div class="plan-week-focus" id="plan-week-focus">
+        <span class="week-focus-label">PRIORITY THIS WEEK</span>
+        <span class="week-focus-value" id="week-focus-value">—</span>
+      </div>
+      <div class="plan-schedule" id="plan-schedule"></div>
+    </div>
+
+  </section>
+
+  <!-- TAB 4: SETTINGS -->
+  <section class="tab-panel" id="tab-settings">
+    <div class="settings-scroll">
+
+      <div class="settings-group">
+        <div class="settings-group-label">Study Profile</div>
+        <div class="form-group">
+          <label class="form-label" for="api-key-input"><span>🔑</span> Gemini API Key</label>
+          <div class="api-key-wrapper">
+            <input class="form-input" id="api-key-input" type="password"
+              placeholder="AIzaSy..." autocomplete="off" spellcheck="false" />
+            <button class="icon-btn" id="api-key-toggle">👁</button>
+          </div>
+          <div class="api-key-status" id="api-key-status"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="subjects-input"><span>📚</span> Subjects</label>
+          <input class="form-input" id="subjects-input" type="text"
+            placeholder="DSA, DBMS, OS, CN, Math" />
+          <div class="form-hint">Comma-separated. Used by AI for personalized suggestions.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="exam-date-input"><span>📅</span> Next Exam Date</label>
+          <input class="form-input" id="exam-date-input" type="date" />
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">Cloud Sync (Supabase)</div>
+        <div class="sync-status-bar" id="sync-status-bar">
+          <span class="sync-dot" id="sync-dot"></span>
+          <span id="sync-status-text">Not connected</span>
+        </div>
+        <div id="sync-auth-section">
+          <div class="form-group">
+            <label class="form-label">Supabase Project URL</label>
+            <input class="form-input" id="supabase-url-input" type="text"
+              placeholder="https://abc.supabase.co" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Anon Key</label>
+            <input class="form-input" id="supabase-key-input" type="password"
+              placeholder="eyJhbGci..." />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" id="sync-email-input" type="email"
+              placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input class="form-input" id="sync-password-input" type="password"
+              placeholder="••••••••" />
+          </div>
+          <div class="sync-btn-row">
+            <button class="sync-btn" id="sync-signin-btn">Sign In</button>
+            <button class="sync-btn secondary" id="sync-signup-btn">Sign Up</button>
+          </div>
+          <div class="sync-feedback" id="sync-feedback"></div>
+        </div>
+        <div id="sync-connected-section" style="display:none;">
+          <div class="sync-user-info" id="sync-user-info"></div>
+          <button class="sync-btn danger" id="sync-signout-btn">Sign Out</button>
+        </div>
+      </div>
+
+      <button class="save-btn" id="save-btn">
+        <span id="save-btn-text">Save Settings</span>
+      </button>
+      <div class="save-feedback" id="save-feedback"></div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">Monitored Sites</div>
+        <div class="tracked-sites">
+          YouTube · Instagram · Twitter/X · Reddit · TikTok · Facebook
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>
