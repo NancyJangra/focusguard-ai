@@ -1,22 +1,3 @@
-/**
- * FocusGuard AI v2 — background.js (Service Worker)
- * ─────────────────────────────────────────────────────────────────────────────
- * The orchestrator. This file is intentionally THIN.
- * 
- * v2 Architecture shift:
- *   v1: background.js was ~300 lines doing everything (AI, stats, alarms, messages)
- *   v2: background.js delegates to dedicated modules:
- *       - ai.js       → all Gemini API calls
- *       - analytics.js → all data read/write
- *       - sync.js      → Supabase cloud sync
- *
- * This file only:
- *   1. Listens for messages and routes them to the right module
- *   2. Manages alarms (focus mode timer)
- *   3. Sends notifications
- *   4. Coordinates cross-module workflows (e.g., distraction → AI → stats → notify)
- */
-
 import {
   getAISuggestion,
   classifyYouTubeContent,
