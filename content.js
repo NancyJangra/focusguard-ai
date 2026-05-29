@@ -1,14 +1,3 @@
-/**
- * FocusGuard AI v2 — content.js
- * ─────────────────────────────────────────────────────────────────────────────
- * Injected into all tracked websites. Vanilla JS, no dependencies.
- *
- * v2 additions:
- *   - YouTube title extraction (sent to background for educational classification)
- *   - XP celebration toast when focus session ends
- *   - Badge notification rendering
- *   - Improved modal UI markup (styled by content-styles.css)
- */
 
 (function () {
   "use strict";
