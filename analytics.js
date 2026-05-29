@@ -1,28 +1,4 @@
-/**
- * FocusGuard AI v2 — analytics.js
- * ─────────────────────────────────────────────────────────────────────────────
- * The Analytics Engine. Handles ALL data writes and reads for:
- *   - Daily distraction events (with hour-of-day tagging)
- *   - Focus session tracking (start, end, duration)
- *   - XP and gamification state
- *   - Weekly trend aggregation
- *   - Productivity score calculation
- *
- * WHY a separate module:
- *   background.js was becoming a god-file mixing AI, alarms, and stats.
- *   Isolating analytics here keeps each file under ~200 lines and makes
- *   the data layer independently testable and extendable.
- *
- * DATA SCHEMA (chrome.storage.local keys):
- *   stats_YYYY-MM-DD  → { siteName: count, ... , _hours: { "14": 3, ... } }
- *   focusSessions     → total completed sessions (number)
- *   focusStreak       → { count, lastDate } — consecutive days with ≥1 session
- *   xp                → total XP points earned
- *   badges            → string[] of earned badge IDs
- *   weeklyGoal        → { targetMinutes, earnedMinutes, weekStart }
- */
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 export function todayKey() {
   return `stats_${new Date().toISOString().split("T")[0]}`;
