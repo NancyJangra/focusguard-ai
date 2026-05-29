@@ -1,10 +1,6 @@
-/**
- * FocusGuard AI v2 — content-styles.css
- * In-page modal and focus overlay styles.
- * Design: Dark glassmorphism with electric accent — feels premium, not jarring.
- */
 
-/* ─── Reset ──────────────────────────────────────────────────────────────── */
+
+/*  Reset  */
 #fg-overlay *, #fg-focus-overlay * {
   box-sizing: border-box;
   margin: 0;
