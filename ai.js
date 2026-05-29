@@ -1,20 +1,3 @@
-/**
- * FocusGuard AI v2 — ai.js
- * ─────────────────────────────────────────────────────────────────────────────
- * The AI Pipeline. Every Gemini API call lives here.
- *
- * WHY isolated:
- *   In v1, AI logic was scattered inside background.js with no clear boundaries.
- *   Isolating it here means we can swap models, add caching, or add fallbacks
- *   without touching anything else. Each function has ONE job.
- *
- * FUNCTIONS:
- *   getAISuggestion(siteName)           → in-page distraction modal suggestion
- *   classifyYouTubeContent(title, url)  → educational vs distracting
- *   generateStudyPlan(context)          → daily AI study plan
- *   generateBehavioralInsights(data)    → "You're most distracted at 9 PM"
- *   generateWeeklyReport(data)          → downloadable weekly summary
- */
 
 const GEMINI_ENDPOINT =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
