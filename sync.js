@@ -1,31 +1,3 @@
-/**
- * FocusGuard AI v2 — sync.js
- * ─────────────────────────────────────────────────────────────────────────────
- * Cloud Sync via Supabase.
- *
- * WHY Supabase (not Firebase):
- *   - Open source Postgres backend
- *   - Free tier generous (500MB DB, 50,000 rows)
- *   - Row-level security means user data is protected
- *   - No Google dependency
- *   - REST API works from a Chrome Extension without a Node SDK
- *
- * ARCHITECTURE:
- *   We use Supabase's REST API directly (no npm SDK in an MV3 extension).
- *   Two tables:
- *     users       → id (uuid), email, created_at
- *     weekly_logs → user_id, week_start, stats_json, created_at
- *
- *   LOCAL-FIRST POLICY:
- *   All reads/writes go to chrome.storage.local first.
- *   Sync is async and fire-and-forget — it never blocks the UI.
- *   If sync fails, the user loses nothing.
- *
- * SETUP (for the developer):
- *   1. Create a free Supabase project at supabase.com
- *   2. Run the SQL in README_SUPABASE.md to create tables
- *   3. Copy your project URL and anon key into Settings
- */
 
 // ─── Supabase Config ──────────────────────────────────────────────────────────
 
@@ -162,11 +134,7 @@ export async function pushWeeklyStats(analyticsData) {
   }
 }
 
-/**
- * Pull the last 4 weeks of stats from Supabase.
- * Used if the user installs the extension on a new device.
- * Returns array of { week_start, stats_json } or null on failure.
- */
+
 export async function pullHistoricalStats() {
   const { url, anonKey, userId } = await getSupabaseConfig();
   if (!url || !anonKey || !userId) return null;
